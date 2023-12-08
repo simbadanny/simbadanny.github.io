@@ -4,9 +4,9 @@
     </head>
     <body>
         <form id="crud-form">
-            <label for="nombre">Nombre:</label>
+            <label for="nombre">TU NOMBRE:</label>
             <input type="text" id = "nombre">
-            <label for="edad">Edad:</label>
+            <label for="edad">EL DE TU NOVIO:</label>
             <input type="number" id = "edad">
             <button type="button" onclick="crearRegistro()">Crear</button>
         </form>
@@ -42,8 +42,8 @@
                 push(
                     ref(database, 'septimo'),
                     {
-                        TU_NOMBRE: nombre,
-                        EL_DE_TU_NOVIO: edad 
+                        name: nombre,
+                        age: edad 
                     }
                 );
 
