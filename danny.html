@@ -101,7 +101,7 @@
                     <td>${registro.age}</td>
                     <td>${registro.cedula}</td>
                     <td>
-                    <button type="button" class="btn btn-warning btn-editar" onclick="editarRegistro('${key}, ${nombre}, ${apellido}, ${edad}, ${cedula}')">Editar</button>
+                    <button type="button" class="btn btn-warning btn-editar" onclick="editarRegistro('${childSnapshot.key}', '${registro.name}', '${registro.last_name}', '${registro.age}', '${registro.cedula}')">Editar</button>
                     <button type="button" class="btn btn-danger btn-eliminar" onclick="eliminarRegistro('${key}')">Eliminar</button>
                     </td>
                 `;
@@ -116,8 +116,9 @@
                 name: nombre,
                 last_name: apellido,
                 age: edad,
-                cedula: cedula
+                cedula: cedula  
             });
+            console.log("Editar registro:", key, nombre, apellido, edad, cedula);   
         }
 
         window.eliminarRegistro = function (key) {
