@@ -13,7 +13,7 @@
         <input type="number" id="edad">
         <br>
         <label for="cedula">Ingrese la Cedula</label>  
-        <input type="cedula" id="cedula">
+        <input type="text" id="cedula">
         <br>
         <button type="button" onclick="crearRegistro()">Crear</button>
     </form>
@@ -39,19 +39,23 @@
         };
 
 
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
+         // Initialize Firebase
+         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
         window.crearRegistro = function () {
             const nombre = document.getElementById("nombre").value;
+            const apellido = document.getElementById("apellido").value;
             const edad = document.getElementById("edad").value;
+            const cedula = document.getElementById("cedula").value;
 
             push(
                 ref(database, 'septimo'),
                 {
                     name: nombre,
-                    age: edad
+                    last_name: apellido,
+                    age: edad,
+                    cedula: cedula
                 }
             );
         }
@@ -64,7 +68,7 @@
             snapshot.forEach((childSnapshot) => {
                 const registro = childSnapshot.val();
                 const li = document.createElement('li');
-                li.textContent = `Nombre: ${registro.name}, Edad: ${registro.age}`;
+                li.textContent = `Nombre: ${registro.name}, Apellido: ${registro.last_name}, Edad: ${registro.age}, Cedula: ${registro.cedula}`;
                 registrosList.appendChild(li);
             });
         });
@@ -72,8 +76,8 @@
         window.actualizarRegistro = function (key, nombre, apellido, edad, cedula) {
             update(ref(database, `septimo/${key}`), {
                 name: nombre,
+                last_name: apellido,
                 age: edad,
-                las_name: apellido,    
                 cedula: cedula
             });
         }
