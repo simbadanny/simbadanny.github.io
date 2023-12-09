@@ -58,10 +58,10 @@
             });
         });
 
-        window.actualizarRegistro = function () {
+        window.actualizarRegistro = function (key, nombre, edad) {
             update(ref(database, `septimo/${key}`), {
                 name: nombre,
-                age:edad
+                age: edad
             });
         }
 
