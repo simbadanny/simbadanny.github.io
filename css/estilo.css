@@ -1,29 +1,30 @@
-body {
-    background-color: #f8f9fa;
-    font-family: 'Arial', sans-serif;
-}
-
-h1 {
-    text-align: center;
-    margin-top: 20px;
-}
-
 form {
     max-width: 400px;
     margin: 0 auto;
 }
 
-table {
-    width: 100%;
+label {
+    margin-top: 10px;
+    display: block;
+}
+
+input {
+    margin-bottom: 10px;
+}
+
+button {
     margin-top: 20px;
-    border-collapse: collapse;
 }
 
-table, th, td {
-    border: 1px solid #dee2e6;
+/* Style the list of records */
+#registros-list {
+    list-style: none;
+    padding: 0;
 }
 
-th, td {
+#registros-list li {
+    margin-bottom: 10px;
     padding: 10px;
-    text-align: left;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
