@@ -11,30 +11,32 @@
 
 <body>
     <h1>Ingrese sus Datos</h1>
-    <br>
-    <br>
     <form id="crud-form">
-        <label for="nombre">Ingrese Nombre:</label>
-        <input type="text" id="nombre">
-        <br>
-        <br>
-        <label for="apellido">Ingrese Apellido:</label>
-        <input type="text" id="apellido">
-        <br>
-        <br>
-        <label for="edad">Ingrese Edad:</label>
-        <input type="number" id="edad">
-        <br>
-        <br>
-        <label for="cedula">Ingrese la Cedula:</label>
-        <input type="text" id="cedula">
-        <br>
-        <br>
-        <button type="button" onclick="crearRegistro()">Crear</button>
+        <div class="row mb-3">
+            <div class="col">
+                <label for="nombre" class="form-label">Nombre:</label>
+                <input type="text" class="form-control" id="nombre" required>
+            </div>
+            <div class="col">
+                <label for="apellido" class="form-label">Apellido:</label>
+                <input type="text" class="form-control" id="apellido" required>
+            </div>
+        </div>
+        <div class="row mb-3">
+            <div class="col">
+                <label for="edad" class="form-label">Edad:</label>
+                <input type="number" class="form-control" id="edad" required>
+            </div>
+            <div class="col">
+                <label for="cedula" class="form-label">Cedula:</label>
+                <input type="text" class="form-control" id="cedula" required>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary" onclick="crearRegistro()">Crear</button>
     </form>
 
-    <table class="table">
-        <thead>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
             <tr>
                 <th>Nombre</th>
                 <th>Apellido</th>
@@ -94,13 +96,13 @@
                 // Create HTML row for each record
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${registro.name}</td>
+                <td>${registro.name}</td>
                     <td>${registro.last_name}</td>
                     <td>${registro.age}</td>
                     <td>${registro.cedula}</td>
                     <td>
-                        <a href="#" class="btn btn-warning">Editar</a>
-                        <a href="#" class="btn btn-danger">Eliminar</a>
+                        <button type="button" class="btn btn-warning btn-editar">Editar</button>
+                        <button type="button" class="btn btn-danger btn-eliminar">Eliminar</button>
                     </td>
                 `;
 
