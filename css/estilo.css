@@ -28,3 +28,28 @@ button {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+body {
+    padding: 20px;
+}
+
+h1 {
+    color: #007bff;
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+table {
+    margin-top: 20px;
+}
+
+th,
+td {
+    text-align: center;
+}
+
+.btn-editar,
+.btn-eliminar {
+    margin-right: 5px;
+}
