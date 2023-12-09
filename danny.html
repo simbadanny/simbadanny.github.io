@@ -3,12 +3,21 @@
 </head>
 <body>
     <form id="crud-form">
-        <label for="nombre">NOMBRE:</label>
-        <input type="text" id="nombre">
-        <label for="edad">EDAD:</label>
+        <label for="nombre">Ingrese NOMBRE:</label>
+        <input type="text" id="nombre"> 
+        <br>
+        <label for="apellido">Ingrese Apellido</label>
+        <input type="text" id="apellido"> 
+        <br>
+        <label for="edad">Ingrese Edad:</label>
         <input type="number" id="edad">
+        <br>
+        <label for="cedula">Ingrese la Cedula</label>  
+        <input type="cedula" id="cedula">
+        <br>
         <button type="button" onclick="crearRegistro()">Crear</button>
     </form>
+    
 
     <ul id="registros-list"></ul>
 
@@ -60,10 +69,12 @@
             });
         });
 
-        window.actualizarRegistro = function (key, nombre, edad) {
+        window.actualizarRegistro = function (key, nombre, apellido, edad, cedula) {
             update(ref(database, `septimo/${key}`), {
                 name: nombre,
-                age: edad
+                age: edad,
+                las_name: apellido,    
+                cedula: cedula
             });
         }
 
