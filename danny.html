@@ -91,25 +91,26 @@
             registrosList.innerHTML = '';
 
             snapshot.forEach((childSnapshot) => {
+                const key = childSnapshot.key; // Get the key of the record
                 const registro = childSnapshot.val();
 
                 // Create HTML row for each record
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                <td>${registro.name}</td>
-                <td>${registro.last_name}</td>
-                <td>${registro.age}</td>
-                <td>${registro.cedula}</td>
-                <td>
-                    
-                </td>
-            `;
-;
+                    <td>${registro.name}</td>
+                    <td>${registro.last_name}</td>
+                    <td>${registro.age}</td>
+                    <td>${registro.cedula}</td>
+                    <td>
+                        <button type="button" class="btn btn-warning btn-editar" onclick="editarRegistro('${key}')">Editar</button>
+                        <button type="button" class="btn btn-danger btn-eliminar" onclick="eliminarRegistro('${key}')">Eliminar</button>
+                    </td>
+                `;
 
-                // Append the row to the table
-                registrosList.appendChild(row);
+                    // Append the row to the table
+                    registrosList.appendChild(row);
+                });
             });
-        });
 
         window.actualizarRegistro = function (key, nombre, apellido, edad, cedula) {
             update(ref(database, `Simba Danny/${key}`), {
