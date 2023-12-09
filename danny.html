@@ -102,6 +102,7 @@
                     <td>${registro.age}</td>
                     <td>${registro.cedula}</td>
                     <td>
+                        
                         <button type="button" class="btn btn-warning btn-editar" onclick="editarRegistro('${childSnapshot.key}', '${registro.name}', '${registro.last_name}', '${registro.age}', '${registro.cedula}')">Editar</button>
                         <button type="button" class="btn btn-danger btn-eliminar" onclick="eliminarRegistro('${childSnapshot.key}')">Eliminar</button>
                     </td>
@@ -112,7 +113,7 @@
                 });
             });
 
-        window.actualizarRegistro = function (key, nombre, apellido, edad, cedula) {
+        window.editarRegistro= function (key, nombre, apellido, edad, cedula) {
             update(ref(database, `Simba Danny/${key}`), {
                 name: nombre,
                 last_name: apellido,
