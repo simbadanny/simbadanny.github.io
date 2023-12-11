@@ -102,7 +102,7 @@
                     <td>${registro.age}</td>
                     <td>${registro.cedula}</td>
                     <td>
-                        <button type="button" class="btn btn-warning btn-actualizar" onclick="actualizarRegistro('${childSnapshot.key}', '${registro.name}', '${registro.last_name}', '${registro.age}', '${registro.cedula}')">Actualizar</button>
+                        <button type="button" class="btn btn-info btn-editar" onclick="editarRegistro('${childSnapshot.key}', '${registro.name}', '${registro.last_name}', '${registro.age}', '${registro.cedula}')">Editar</button>
                         <button type="button" class="btn btn-danger btn-eliminar" onclick="eliminarRegistro('${childSnapshot.key}')">Eliminar</button>
                     </td>
                 `;
@@ -112,13 +112,34 @@
                 });
             });
 
-            window.actualizarRegistro = function (key, nombre, apellido, edad, cedula) {
+         
+            window.editarRegistro = function (key, nombre, apellido, edad, cedula) {
+                // Populate the form with the existing data
+                document.getElementById("nombre").value = nombre;
+                document.getElementById("apellido").value = apellido;
+                document.getElementById("edad").value = edad;
+                document.getElementById("cedula").value = cedula;
+
+                // Replace the "Crear" button with an "Actualizar" button
+                const crearButton = document.querySelector(".btn-crear");
+                crearButton.innerHTML = "Actualizar";
+                crearButton.onclick = function () {
+                    actualizarRegistro(key);
+                };
+            }
+
+            window.actualizarRegistro = function (key) {
+                const nombre = document.getElementById("nombre").value;
+                const apellido = document.getElementById("apellido").value;
+                const edad = document.getElementById("edad").value;
+                const cedula = document.getElementById("cedula").value;
+
                 update(ref(database, `Simba Danny/${key}`), {
-                name: nombre,
-                last_name: apellido,
-                age: edad,
-                cedula: cedula
-            });
+                    name: nombre,
+                    last_name: apellido,
+                    age: edad,
+                    cedula: cedula
+                });
         }
 
         window.eliminarRegistro = function (key) {
