@@ -113,8 +113,8 @@
                 });
             });
 
-        window.actualizarRegistro = function (key, nombre, apellido, edad, cedula) {
-            update(ref(database, `Simba Danny/${key}`), {
+            window.actualizarRegistro = function (key, nombre, apellido, edad, cedula) {
+                update(ref(database, `Simba Danny/${key}`), {
                 name: nombre,
                 last_name: apellido,
                 age: edad,
