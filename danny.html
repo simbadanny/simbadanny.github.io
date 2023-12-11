@@ -79,7 +79,7 @@
             const cedula = document.getElementById("cedula").value;
 
             push(
-                ref(database, 'Simba Danny'),
+                ref(database, 'Simba_Danny'),
                 {
                     name: nombre,
                     last_name: apellido,
@@ -90,7 +90,7 @@
         }
 
         // Leer registros al cargar la página
-        onValue(ref(database, 'Simba Danny'), (snapshot) => {
+        onValue(ref(database, 'Simba_Danny'), (snapshot) => {
             const registrosList = document.getElementById('registros-list');
             registrosList.innerHTML = '';
 
@@ -140,7 +140,7 @@
         const cedula = document.getElementById("cedula").value;
 
         // Use update() to modify the specific fields
-        update(ref(database, `Simba Danny/${key}`), {
+        update(ref(database, `Simba_Danny/${key}`), {
             'name': nombre,
             'last_name': apellido,
             'age': edad,
@@ -158,7 +158,7 @@
         
 
         window.eliminarRegistro = function (key) {
-            remove(ref(database, `Simba Danny/${key}`));
+            remove(ref(database, `Simba_Danny/${key}`));
         }
     </script>
 </body>
