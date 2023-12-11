@@ -113,34 +113,44 @@
             });
 
          
-            window.editarRegistro = function (key, nombre, apellido, edad, cedula) {
-                // Populate the form with the existing data
-                document.getElementById("nombre").value = nombre;
-                document.getElementById("apellido").value = apellido;
-                document.getElementById("edad").value = edad;
-                document.getElementById("cedula").value = cedula;
+            
+    window.editarRegistro = function (key, nombre, apellido, edad, cedula) {
+        // Populate the form with the existing data
+        document.getElementById("nombre").value = nombre;
+        document.getElementById("apellido").value = apellido;
+        document.getElementById("edad").value = edad;
+        document.getElementById("cedula").value = cedula;
 
-                // Replace the "Crear" button with an "Actualizar" button
-                const crearButton = document.querySelector(".btn-crear");
-                crearButton.innerHTML = "Actualizar";
-                crearButton.onclick = function () {
-                    actualizarRegistro(key);
-                };
-            }
+        // Replace the "Crear" button with an "Actualizar" button
+        const crearButton = document.querySelector(".btn-crear");
+        crearButton.innerHTML = "Actualizar";
+        crearButton.onclick = function () {
+            actualizarRegistro(key);
+        };
+    }
 
-            window.actualizarRegistro = function (key) {
-                const nombre = document.getElementById("nombre").value;
-                const apellido = document.getElementById("apellido").value;
-                const edad = document.getElementById("edad").value;
-                const cedula = document.getElementById("cedula").value;
+    window.actualizarRegistro = function (key) {
+        const nombre = document.getElementById("nombre").value;
+        const apellido = document.getElementById("apellido").value;
+        const edad = document.getElementById("edad").value;
+        const cedula = document.getElementById("cedula").value;
 
-                update(ref(database, `Simba Danny/${key}`), {
-                    name: nombre,
-                    last_name: apellido,
-                    age: edad,
-                    cedula: cedula
-                });
-        }
+        update(ref(database, `Simba Danny/${key}`), {
+            name: nombre,
+            last_name: apellido,
+            age: edad,
+            cedula: cedula
+        });
+
+        // Reset the form and button after updating
+        document.getElementById("crud-form").reset();
+        const crearButton = document.querySelector(".btn-crear");
+        crearButton.innerHTML = "Crear";
+        crearButton.onclick = function () {
+            crearRegistro();
+        };
+    }
+        
 
         window.eliminarRegistro = function (key) {
             remove(ref(database, `Simba Danny/${key}`));
