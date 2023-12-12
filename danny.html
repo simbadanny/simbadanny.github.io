@@ -1,5 +1,4 @@
 <html>
-
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -54,19 +53,22 @@
 
     <script type="module">
         // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-        import { getDatabase, ref, push, onValue, update, remove } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
-
-        // Your web app's Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyBja1INkBV0jcirLwx4eNilrZcREPibiY8",
-            authDomain: "musica-afa86.firebaseapp.com",
-            databaseURL: "https://musica-afa86-default-rtdb.firebaseio.com",
-            projectId: "musica-afa86",
-            storageBucket: "musica-afa86.appspot.com",
-            messagingSenderId: "275776899168",
-            appId: "1:275776899168:web:eb2bfea603cc0fb25f5b05"
-        };
+          // Import the functions you need from the SDKs you need
+          import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
+            import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
+            // TODO: Add SDKs for Firebase products that you want to use
+            // https://firebase.google.com/docs/web/setup#available-libraries
+          
+            // Your web app's Firebase configuration
+            const firebaseConfig = {
+              apiKey: "AIzaSyBMJsVpnbOwVOiVNbTZScZdet9qlGigDL0",
+              authDomain: "conexion-8ec0d.firebaseapp.com",
+              databaseURL: "https://conexion-8ec0d-default-rtdb.firebaseio.com",
+              projectId: "conexion-8ec0d",
+              storageBucket: "conexion-8ec0d.appspot.com",
+              messagingSenderId: "679910299749",
+              appId: "1:679910299749:web:9800b464879628b4850e8c"
+            };
 
         // Initialize Firebase
         const app = initializeApp(firebaseConfig);
@@ -79,7 +81,7 @@
             const cedula = document.getElementById("cedula").value;
 
             push(
-                ref(database, 'Simba Danny'),
+                ref(database, 'Simba_Danny'),
                 {
                     name: nombre,
                     last_name: apellido,
@@ -90,7 +92,7 @@
         }
 
         // Leer registros al cargar la página
-        onValue(ref(database, 'Simba Danny'), (snapshot) => {
+        onValue(ref(database, 'Simba_Danny'), (snapshot) => {
             const registrosList = document.getElementById('registros-list');
             registrosList.innerHTML = '';
 
@@ -118,32 +120,33 @@
 
          
             
-    window.editarRegistro = function (key, nombre, apellido, edad, cedula) {
-        // Populate the form with the existing data
-        document.getElementById("nombre").value = nombre;
-        document.getElementById("apellido").value = apellido;
-        document.getElementById("edad").value = edad;
-        document.getElementById("cedula").value = cedula;
+        window.editarRegistro = function (key, nombre, apellido, edad, cedula) {
+            // Populate the form with the existing data
+            document.getElementById("nombre").value = nombre;
+            document.getElementById("apellido").value = apellido;
+            document.getElementById("edad").value = edad;
+            document.getElementById("cedula").value = cedula;
 
-        // Replace the "Crear" button with an "Actualizar" button
-        const crearButton = document.querySelector(".btn-crear");
-        crearButton.innerHTML = "Actualizar";
-        crearButton.onclick = function () {
-            actualizarRegistro(key);
-        };
-    }
+            // Replace the "Crear" button with an "Actualizar" button
+            const crearButton = document.querySelector(".btn.btn-primary"); // Cambiado de ".btn-crear" a ".btn.btn-primary"
+            crearButton.innerHTML = "Actualizar";
+            crearButton.onclick = function () {
+                actualizarRegistro(key);
+            };
+        }
 
-    window.actualizarRegistro = function (key) {
+        window.actualizarRegistro = function (key) {
         const nombre = document.getElementById("nombre").value;
         const apellido = document.getElementById("apellido").value;
         const edad = document.getElementById("edad").value;
         const cedula = document.getElementById("cedula").value;
 
-        update(ref(database, Simba Danny/${key}), {
-            name: nombre,
-            last_name: apellido,
-            age: edad,
-            cedula: cedula
+        // Use update() to modify the specific fields
+        update(ref(database, `Simba_Danny/${key}`), {
+            'name': nombre,
+            'last_name': apellido,
+            'age': edad,
+            'cedula': cedula
         });
 
         // Reset the form and button after updating
@@ -157,7 +160,7 @@
         
 
         window.eliminarRegistro = function (key) {
-            remove(ref(database, Simba Danny/${key}));
+            remove(ref(database, `Simba_Danny/${key}`));
         }
     </script>
 </body>
