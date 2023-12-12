@@ -1,5 +1,4 @@
 <html>
-
 <head>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -121,20 +120,20 @@
 
          
             
-    window.editarRegistro = function (key, nombre, apellido, edad, cedula) {
-        // Populate the form with the existing data
-        document.getElementById("nombre").value = nombre;
-        document.getElementById("apellido").value = apellido;
-        document.getElementById("edad").value = edad;
-        document.getElementById("cedula").value = cedula;
+        window.editarRegistro = function (key, nombre, apellido, edad, cedula) {
+            // Populate the form with the existing data
+            document.getElementById("nombre").value = nombre;
+            document.getElementById("apellido").value = apellido;
+            document.getElementById("edad").value = edad;
+            document.getElementById("cedula").value = cedula;
 
-        // Replace the "Crear" button with an "Actualizar" button
-        const crearButton = document.querySelector(".btn-crear");
-        crearButton.innerHTML = "Actualizar";
-        crearButton.onclick = function () {
-            actualizarRegistro(key);
-        };
-    }
+            // Replace the "Crear" button with an "Actualizar" button
+            const crearButton = document.querySelector(".btn.btn-primary"); // Cambiado de ".btn-crear" a ".btn.btn-primary"
+            crearButton.innerHTML = "Actualizar";
+            crearButton.onclick = function () {
+                actualizarRegistro(key);
+            };
+        }
 
         window.actualizarRegistro = function (key) {
         const nombre = document.getElementById("nombre").value;
