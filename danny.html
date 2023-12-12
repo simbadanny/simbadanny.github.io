@@ -1,66 +1,51 @@
+<!DOCTYPE html>
 <html>
+
 <head>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="css/estilo.css">
+    <title>CRUD Bryan Sanchez</title>
 </head>
 
 <body>
-    <h1>Ingrese sus Datos</h1>
+    <h1>CRUD Bryan Sanchez</h1>
     <form id="crud-form">
-        <div class="row mb-3">
-            <div class="col">
-                <label for="nombre" class="form-label">Nombre:</label>
-                <input type="text" class="form-control" id="nombre">
-            </div>
-            <div class="col">
-                <label for="apellido" class="form-label">Apellido:</label>
-                <input type="text" class="form-control" id="apellido">
-            </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col">
-                <label for="edad" class="form-label">Edad:</label>
-                <input type="number" class="form-control" id="edad">
-            </div>
-            <div class="col">
-                <label for="cedula" class="form-label">Cedula:</label>
-                <input type="number" class="form-control" id="cedula">
-            </div>
-        </div>
-        <!-- Create button -->
-        <button type="button" class="btn btn-primary" onclick="crearRegistro()">Crear</button>
-        <!-- Update button (initially hidden) -->
-        <button type="button" class="btn btn-success btn-actualizar" onclick="actualizarRegistro()">Actualizar</button>
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" required>
+        <label for="apellido">Apellido:</label>
+        <input type="text" id="apellido" required>
+        <label for="cedula">Cedula:</label>
+        <input type="text" id="cedula" required>
+        <label for="email">Email:</label>
+        <input type="email" id="email" required>
+        <label for="fecha">Fecha:</label>
+        <input type="date" id="fecha" required>
+        <button type="button" onclick="crearOActualizarRegistro()">Guardar</button>
+        <button type="button" onclick="limpiarFormulario()">Limpiar</button>
     </form>
-    
 
-    <table class="table table-bordered">
-        <thead class="thead-dark">
+    <br>
+
+    <table border="1">
+        <thead>
             <tr>
                 <th>Nombre</th>
                 <th>Apellido</th>
-                <th>Edad</th>
                 <th>Cedula</th>
+                <th>Email</th>
+                <th>Fecha</th>
                 <th>Acciones</th>
             </tr>
         </thead>
-        <tbody id="registros-list"></tbody>
+        <tbody id="table-body">
+            <!-- Registros se mostrarán aquí -->
+        </tbody>
     </table>
 
     <script type="module">
-        // Import the functions you need from the SDKs you need
-          // Import the functions you need from the SDKs you need
-          import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js";
-            import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/10.7.0/firebase-database.js";
-            // TODO: Add SDKs for Firebase products that you want to use
-            // https://firebase.google.com/docs/web/setup#available-libraries
-          
-            // Your web app's Firebase configuration
-            const firebaseConfig = {
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getDatabase, ref, push, update, remove, onValue } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-database.js";
+
+                    // Your web app's Firebase configuration
+                    const firebaseConfig = {
               apiKey: "AIzaSyBMJsVpnbOwVOiVNbTZScZdet9qlGigDL0",
               authDomain: "conexion-8ec0d.firebaseapp.com",
               databaseURL: "https://conexion-8ec0d-default-rtdb.firebaseio.com",
@@ -70,97 +55,120 @@
               appId: "1:679910299749:web:9800b464879628b4850e8c"
             };
 
-        // Initialize Firebase
+
         const app = initializeApp(firebaseConfig);
         const database = getDatabase(app);
 
-        window.crearRegistro = function () {
-            const nombre = document.getElementById("nombre").value;
-            const apellido = document.getElementById("apellido").value;
-            const edad = document.getElementById("edad").value;
-            const cedula = document.getElementById("cedula").value;
+        const nombreInput = document.getElementById("nombre");
+        const apellidoInput = document.getElementById("apellido");
+        const cedulaInput = document.getElementById("cedula");
+        const emailInput = document.getElementById("email");
+        const fechaInput = document.getElementById("fecha");
 
-            push(
-                ref(database, 'Simba_Danny'),
-                {
-                    name: nombre,
-                    last_name: apellido,
-                    age: edad,
-                    cedula: cedula
+        window.crearOActualizarRegistro = function () {
+            const nombre = nombreInput.value;
+            const apellido = apellidoInput.value;
+            const cedula = cedulaInput.value;
+            const email = emailInput.value;
+            const fecha = fechaInput.value;
+
+            if (nombre && apellido && cedula && email && fecha) {
+                const cedulaExistente = document.getElementById("cedula-existente");
+
+                if (cedulaExistente) {
+                    actualizarRegistro(cedulaExistente.value);
+                } else {
+                    crearRegistro();
                 }
-            );
+            } else {
+                alert("Todos los campos son obligatorios");
+            }
         }
 
-        // Leer registros al cargar la página
-        onValue(ref(database, 'Simba_Danny'), (snapshot) => {
-            const registrosList = document.getElementById('registros-list');
-            registrosList.innerHTML = '';
+        function crearRegistro() {
+            push(
+                ref(database, 'Bryan_Sanchez'),
+                {
+                    name: nombreInput.value,
+                    apellido: apellidoInput.value,
+                    cedula: cedulaInput.value,
+                    email: emailInput.value,
+                    date: fechaInput.value
+                }
+            );
+
+            limpiarFormulario();
+        }
+
+        window.actualizarRegistro = function (cedula) {
+            const updates = {};
+            updates['/Bryan_Sanchez/' + cedula] = {
+                name: nombreInput.value,
+                apellido: apellidoInput.value,
+                cedula: cedulaInput.value,
+                email: emailInput.value,
+                date: fechaInput.value
+            };
+
+            update(ref(database), updates);
+
+            limpiarFormulario();
+        }
+
+        window.eliminarRegistro = function (cedula) {
+            remove(ref(database, 'Bryan_Sanchez/' + cedula));
+
+            limpiarFormulario();
+        }
+
+        onValue(ref(database, 'Bryan_Sanchez'), (snapshot) => {
+            const tableBody = document.getElementById('table-body');
+            tableBody.innerHTML = "";
 
             snapshot.forEach((childSnapshot) => {
-                const key = childSnapshot.key; // Get the key of the record
-                const registro = childSnapshot.val();
-
-                // Create HTML row for each record
+                const data = childSnapshot.val();
                 const row = document.createElement('tr');
                 row.innerHTML = `
-                    <td>${registro.name}</td>
-                    <td>${registro.last_name}</td>
-                    <td>${registro.age}</td>
-                    <td>${registro.cedula}</td>
+                    <td>${data.name}</td>
+                    <td>${data.apellido}</td>
+                    <td>${data.cedula}</td>
+                    <td>${data.email}</td>
+                    <td>${data.date}</td>
                     <td>
-                        <button type="button" class="btn btn-info btn-editar" onclick="editarRegistro('${childSnapshot.key}', '${registro.name}', '${registro.last_name}', '${registro.age}', '${registro.cedula}')">Editar</button>
-                        <button type="button" class="btn btn-danger btn-eliminar" onclick="eliminarRegistro('${childSnapshot.key}')">Eliminar</button>
+                        <button onclick="llenarFormulario('${data.name}', '${data.apellido}', '${data.cedula}', '${data.email}', '${data.date}')">Actualizar</button>
+                        <button onclick="eliminarRegistro('${data.cedula}')">Eliminar</button>
                     </td>
                 `;
-
-                    // Append the row to the table
-                    registrosList.appendChild(row);         
-                });
+                tableBody.appendChild(row);
             });
+        });
 
-         
-            
-        window.editarRegistro = function (key, nombre, apellido, edad, cedula) {
-            // Populate the form with the existing data
-            document.getElementById("nombre").value = nombre;
-            document.getElementById("apellido").value = apellido;
-            document.getElementById("edad").value = edad;
-            document.getElementById("cedula").value = cedula;
+        window.llenarFormulario = function (nombre, apellido, cedula, email, fecha) {
+            nombreInput.value = nombre;
+            apellidoInput.value = apellido;
+            cedulaInput.value = cedula;
+            emailInput.value = email;
+            fechaInput.value = fecha;
 
-            // Replace the "Crear" button with an "Actualizar" button
-            const crearButton = document.querySelector(".btn.btn-primary"); // Cambiado de ".btn-crear" a ".btn.btn-primary"
-            crearButton.innerHTML = "Actualizar";
+            const crearButton = document.querySelector("button[onclick='crearOActualizarRegistro()']");
+            crearButton.textContent = "Actualizar";
             crearButton.onclick = function () {
-                actualizarRegistro(key);
+                actualizarRegistro(cedula);
             };
         }
 
-        window.actualizarRegistro = function (key) {
-        const nombre = document.getElementById("nombre").value;
-        const apellido = document.getElementById("apellido").value;
-        const edad = document.getElementById("edad").value;
-        const cedula = document.getElementById("cedula").value;
+        function limpiarFormulario() {
+            nombreInput.value = "";
+            apellidoInput.value = "";
+            cedulaInput.value = "";
+            emailInput.value = "";
+            fechaInput.value = "";
 
-        // Use update() to modify the specific fields
-        update(ref(database, `Simba_Danny/${key}`), {
-            'name': nombre,
-            'last_name': apellido,
-            'age': edad,
-            'cedula': cedula
-        });
-
-        // Reset the form and button after updating
-        document.getElementById("crud-form").reset();
-        const crearButton = document.querySelector(".btn-crear");
-        crearButton.innerHTML = "Crear";
-        crearButton.onclick = function () {
-            crearRegistro();
-        };
-    }
-        
-
-        window.eliminarRegistro = function (key) {
-            remove(ref(database, `Simba_Danny/${key}`));
+            const crearButton = document.querySelector("button[onclick='crearOActualizarRegistro()']");
+            crearButton.textContent = "Guardar";
+            crearButton.onclick = function () {
+                crearOActualizarRegistro();
+            };
         }
     </script>
 </body>
